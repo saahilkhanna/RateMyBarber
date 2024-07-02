@@ -1,0 +1,43 @@
+.landing-page {
+    text-align: center;
+    background-image: url('/Users/Prabhav/Desktop/RateMyBarber-RMB/rate-my-barber/Background.webp');
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    color: white;
+}
+
+.hero-section {
+    position: relative;
+    top: 50%;
+    transform: TranslateY(-60%);
+
+    baseline-shift: initial;
+    max-width: 450px;
+    max-height: 450px;
+    margin: 0 auto;
+    padding: 2em;
+    background-color: rgba(0, 0, 0, 0);
+    border-radius: 10px;
+    margin-left: 450px ;
+
+}
+
+.title {
+    font-size: 3em;
+    font-family: 'Arial', sans-serif; /* Change to a modern font if desired */
+    margin-bottom: 0.5em;
+    color: black;
+}
+
+.subtitle {
+    font-size: 1.5em;
+    margin-bottom: 1em;
+    color: black;
+}
+
+.alternative-search {
+    margin-top: 1em;
+    font-size: 1em;
+    color: #444444;
+}
