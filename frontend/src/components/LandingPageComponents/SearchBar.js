@@ -10,7 +10,8 @@ const SearchBar = () => {
     const navigate = useNavigate();
 
     const fetchData = async (value) => {
-        console.log("API Key:", process.env.REACT_APP_API_KEY); // Log the API key
+        const apiKey = process.env.REACT_APP_API_KEY; // Use the environment variable
+        console.log("API Key:", apiKey); // Log the API key
         console.log("Input Value:", value); // Log the input value
 
         if (value.length === 0) {
@@ -19,15 +20,15 @@ const SearchBar = () => {
         }
 
         try {
-            const response = await axios.get(`/api/maps/api/place/autocomplete/json`, {
+            const response = await axios.get(`https://maps.googleapis.com/maps/api/place/autocomplete/json`, {
                 params: {
                     input: value,
                     types: 'establishment',
                     language: 'en',
-                    key: process.env.REACT_APP_API_KEY,
+                    key: apiKey,
                 },
             });
-            console.log("API Response:", response); // Log the API response
+            console.log("API Response:", response); // Log the entire API response
 
             const results = response.data.predictions.map(prediction => ({
                 description: prediction.description,
