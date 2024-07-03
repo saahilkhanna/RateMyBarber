@@ -10,7 +10,8 @@ const SearchBar = () => {
     const navigate = useNavigate();
 
     const fetchData = async (value) => {
-        console.log("API Key:", process.env.AIzaSyApWyXIWiMIyuCofGQnm4yHaVNfxeWn5qk);
+        console.log("API Key:", process.env.REACT_APP_API_KEY); // Log the API key
+        console.log("Input Value:", value); // Log the input value
 
         if (value.length === 0) {
             setSuggestions([]);
@@ -18,19 +19,21 @@ const SearchBar = () => {
         }
 
         try {
-            const apiKey = process.env.AIzaSyApWyXIWiMIyuCofGQnm4yHaVNfxeWn5qk
-            const response = await axios.get(`https://maps.googleapis.com/maps/api/place/autocomplete/json`, {
+            const response = await axios.get(`/api/maps/api/place/autocomplete/json`, {
                 params: {
                     input: value,
                     types: 'establishment',
                     language: 'en',
-                    key: apiKey,
+                    key: process.env.REACT_APP_API_KEY,
                 },
             });
+            console.log("API Response:", response); // Log the API response
+
             const results = response.data.predictions.map(prediction => ({
                 description: prediction.description,
             }));
             setSuggestions(results);
+            console.log("Suggestions:", results); // Log the suggestions
         } catch (error) {
             console.error('Error fetching data:', error);
         }
@@ -38,15 +41,18 @@ const SearchBar = () => {
 
     const handleChange = (event) => {
         const value = event.target.value;
+        console.log("Handle Change Value:", value); // Log the value from handleChange
         setInput(value);
         fetchData(value);
     };
 
     const handleFocus = () => {
+        console.log("Input Focused");
         setInput('');
     };
 
     const handleBlur = () => {
+        console.log("Input Blurred");
         if (input === '') {
             setInput('Where do you want to find a barbershop?');
         }
@@ -55,12 +61,14 @@ const SearchBar = () => {
     };
 
     const handleSuggestionClick = (description) => {
+        console.log("Suggestion Clicked:", description);
         setInput(description);
         setSuggestions([]);
         navigate(`/search-results?query=${description}`);
     };
 
     const handleKeyUp = () => {
+        console.log("Key Up Event");
         clearTimeout(timeoutVar);
         timeoutVar = setTimeout(() => {
             fetchData(input);
@@ -70,10 +78,12 @@ const SearchBar = () => {
     let timeoutVar;
 
     const handleKeyDown = () => {
+        console.log("Key Down Event");
         clearTimeout(timeoutVar);
     };
 
     const handleSearchButtonClick = () => {
+        console.log("Search Button Clicked");
         navigate(`/search-results?query=${input}`);
     };
 
