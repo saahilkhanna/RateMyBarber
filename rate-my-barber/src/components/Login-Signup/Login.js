@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { Link, Navigate } from "react-router-dom";
-import { authStates, withAuth } from "./auth";
-import Loader from "./Loader";
-import { signInWithEmailPassword, signInWithGoogle } from "../utils/firebase";
-import "../components/login.css";
+import { authStates, withAuth } from "../auth/auth";
+import Loader from "../Loader/Loader";
+import { signInWithEmailPassword, signInWithGoogle } from "../../utils/firebase";
+import "./login.css";
 
 const Login = (props) => {
     const [email, setEmail] = useState("");

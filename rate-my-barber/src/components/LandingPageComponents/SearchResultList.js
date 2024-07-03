@@ -1,14 +1,25 @@
-import React, { useState } from 'react';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom'; // Updated import
-import './SearchBar.css';
+import React from 'react';
+import PropTypes from 'prop-types';
+import SearchResult from './SearchResult';
+import './SearchResultList.css';
 
-export const SearchResult = ({result}) => {
+const SearchResultList = ({ results, onClick }) => {
     return (
-        <div> className="results-list">
-            results.map((result, id)) =>
-                return <SearchResult result=(result) key=(id)/>})}
+        <div className="results-list">
+            {results.map((result, id) => (
+                <SearchResult result={result} key={id} onClick={onClick} />
+            ))}
+        </div>
+    );
+};
 
-</div>
-)
-}
+SearchResultList.propTypes = {
+    results: PropTypes.arrayOf(
+        PropTypes.shape({
+            name: PropTypes.string.isRequired,
+        }).isRequired
+    ).isRequired,
+    onClick: PropTypes.func.isRequired,
+};
+
+export default SearchResultList;

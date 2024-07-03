@@ -1,4 +1,4 @@
-.login-container {
+.signup-container {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -6,7 +6,7 @@
     background-color: #f8f9fa;
 }
 
-.login-form {
+.signup-form {
     background: white;
     padding: 2em;
     border-radius: 8px;
@@ -16,13 +16,13 @@
     text-align: center;
 }
 
-.login-form h2 {
+.signup-form h2 {
     margin-bottom: 1em;
     font-size: 1.5em;
     color: #333;
 }
 
-.login-form input {
+.signup-form input {
     width: calc(100% - 2em);
     padding: 0.75em;
     margin: 0.5em 0;
@@ -31,7 +31,7 @@
     font-size: 1em;
 }
 
-.login-form .login-button, .login-form .google-button {
+.signup-form .signup-button, .signup-form .google-button {
     width: 100%;
     padding: 0.75em;
     margin: 0.5em 0;
@@ -42,39 +42,39 @@
     transition: background-color 0.3s;
 }
 
-.login-form .login-button {
-    background-color: #007bff;
+.signup-form .signup-button {
+    background-color: #28a745;
     color: white;
 }
 
-.login-form .login-button:hover {
-    background-color: #0056b3;
+.signup-form .signup-button:hover {
+    background-color: #218838;
 }
 
-.login-form .google-button {
+.signup-form .google-button {
     background-color: #db4437;
     color: white;
 }
 
-.login-form .google-button:hover {
+.signup-form .google-button:hover {
     background-color: #c33d2e;
 }
 
-.login-form .error {
+.signup-form .error {
     color: red;
     margin-bottom: 1em;
 }
 
-.signup-prompt {
+.login-prompt {
     margin-top: 1em;
     font-size: 0.9em;
 }
 
-.signup-link {
+.login-link {
     color: #007bff;
     text-decoration: none;
 }
 
-.signup-link:hover {
+.login-link:hover {
     text-decoration: underline;
 }

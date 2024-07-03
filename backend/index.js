@@ -2,10 +2,11 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+require('dotenv').config(); // Load environment variables
 
-const barbershopRoutes = require('./routes/barbershops');
-const barberRoutes = require('./routes/barbers');
-const reviewRoutes = require('./routes/reviews');
+const barbershopRoutes = require('./routes/barberShopRoutes');
+const barberRoutes = require('./routes/barberRoute');
+const reviewRoutes = require('./routes/reviewRoutes');
 
 const app = express();
 
@@ -14,7 +15,7 @@ app.use(bodyParser.json());
 app.use(cors());
 
 // Database Connection
-mongoose.connect('your-mongo-db-connection-string', { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => console.log('MongoDB connected'))
     .catch(err => console.log(err));
 
@@ -28,3 +29,4 @@ const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
+

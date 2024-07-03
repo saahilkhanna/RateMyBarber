@@ -1,28 +1,71 @@
-.search-bar {
-    display: flex;
-    justify-content: center;
-    margin: 2em 0;
+.input-wrapper {
+    position: relative;
+    margin: 0 auto;
+    width: 100%;
+    max-width: 500px;
 }
 
-.search-bar input {
+.input {
+    width: 100%;
     padding: 0.75em;
-    width: 300px; /* Adjust the width to fit within the box */
     border: 1px solid #ccc;
-    border-radius: 4px 0 0 4px; /* Round left side only */
-    font-family: "Helvetica Neue";
+    border-radius: 4px;
 }
 
-.search-bar button {
-    padding: 0.75em 1.5em; /* Adjust padding to fit within the box */
-    border: none;
-    background-color: #000;
-    color: white;
-    border-radius: 0 4px 4px 0; /* Round right side only */
-    margin-left: -1px; /* Remove the gap between input and button */
+.input-wrapper__text {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 0.5em;
+}
+
+.input-wrapper__text__left {
+    font-size: 1em;
+}
+
+.input-wrapper__text__right {
+    display: flex;
+    align-items: center;
+}
+
+.input-wrapper__text__right__go-right {
+    width: 10px;
+    height: 10px;
+    border-right: 2px solid #000;
+    border-bottom: 2px solid #000;
+    transform: rotate(45deg);
+    margin-left: 0.5em;
+}
+
+.suggestions {
+    position: absolute;
+    width: 100%;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-top: 0.5em;
+    z-index: 1000;
+}
+
+.suggestions__item {
+    padding: 0.75em;
     cursor: pointer;
 }
 
-.search-bar button:hover {
-    background-color: #444;
+.suggestions__item:hover {
+    background-color: #f0f0f0;
 }
 
+button {
+    display: block;
+    margin-top: 1em;
+    padding: 0.75em 1.5em;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}

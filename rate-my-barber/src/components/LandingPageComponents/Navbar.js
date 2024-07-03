@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { authStates, withAuth } from './auth';
-import { signOut } from '../utils/firebase';
+import { authStates, withAuth } from '../auth/auth';
+import { signOut } from '../../utils/firebase';
 import './Navbar.css';
 
 class Navbar extends React.Component {

@@ -9,6 +9,8 @@ import { LoadingProvider, useLoading } from './context/LoadingContext';
 import Loader from './components/Loader/Loader';
 import SearchResultList from './components/LandingPageComponents/SearchResultList';
 import './App.css';
+import SearchBar from './components/LandingPageComponents/SearchBar'
+import SearchResult from './components/LandingPageComponents/SearchResult';
 
 const AppContent = () => {
     const { loading } = useLoading();
@@ -27,13 +29,16 @@ const AppContent = () => {
             </Routes>
         </>
     );
+
 };
+
 
 function App() {
     return (
         <Router>
             <LoadingProvider>
                 <div className="App">
+
                     <AppContent />
                 </div>
             </LoadingProvider>

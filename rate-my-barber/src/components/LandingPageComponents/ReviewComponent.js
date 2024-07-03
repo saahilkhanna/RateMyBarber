@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { submitReview } from '../services/api';
+import { submitReview } from '../../services/api';
 
 const ReviewComponent = ({ barberId }) => {
     const [rating, setRating] = useState(0);

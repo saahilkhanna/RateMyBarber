@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { Link, Navigate } from "react-router-dom";
-import { authStates, withAuth } from "./auth";
-import Loader from "./Loader";
-import { signUpWithEmailPassword, signInWithGoogle } from "../utils/firebase";
-import "../components/Signup.css";
+import { authStates, withAuth } from "../auth/auth";
+import Loader from "../Loader/Loader";
+import { signUpWithEmailPassword, signInWithGoogle } from "../../utils/firebase";
+import "./Signup.css";  // Ensure this path is correct
 
 const Signup = (props) => {
     const [name, setName] = useState("");
@@ -97,4 +97,3 @@ const Signup = (props) => {
 };
 
 export default withAuth(Signup);
-

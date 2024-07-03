@@ -1,5 +1,5 @@
 import React from "react";
-import { auth } from '../firebaseConfig';
+import { auth } from '../../firebaseConfig';
 
 export const authStates = {
     INITIAL_VALUE: "unknown",
