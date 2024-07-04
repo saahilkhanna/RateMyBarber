@@ -1,128 +1,84 @@
 import React, { useState } from 'react';
-import axios from 'axios';
-import Input from './Input';  // Ensure correct import path
+import PlacesAutocomplete, {geocodeByAddress, geocodeByPlaceId, getLatLng} from 'react-places-autocomplete';
 import './SearchBar.css';
-import { useNavigate } from 'react-router-dom';
 
-const SearchBar = () => {
-    const [input, setInput] = useState('Where do you want to find a barbershop?');
-    const [suggestions, setSuggestions] = useState([]);
-    const navigate = useNavigate();
+const SearchBar = ({ setAddress, setCoordinates }) => {
+    const [address, setAddressState] = useState('');
 
-    const fetchData = async (value) => {
-        const apiKey = process.env.REACT_APP_API_KEY; // Use the environment variable
-        console.log("API Key:", apiKey); // Log the API key
-        console.log("Input Value:", value); // Log the input value
+    const handleSelect = async (value) => {
+        const results = await geocodeByAddress(value);
+        const ll = await getLatLng(results[0]);
+        console.log(ll);
+        setAddressState(value);
+        setAddress(value);
+        setCoordinates(ll);
+    };
 
-        if (value.length === 0) {
-            setSuggestions([]);
-            return;
-        }
+    const handleGeolocation = () => {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+                async (position) => {
+                    const latitude = position.coords.latitude;
+                    const longitude = position.coords.longitude;
+                    console.log(`Latitude: ${latitude}, Longitude: ${longitude}`);
 
-        try {
-            const response = await axios.get(`https://maps.googleapis.com/maps/api/place/autocomplete/json`, {
-                params: {
-                    input: value,
-                    types: 'establishment',
-                    language: 'en',
-                    key: apiKey,
+                    const results = await geocodeByPlaceId({
+                        lat: latitude,
+                        lng: longitude,
+                    });
+                    const address = results[0].formatted_address;
+                    setAddressState(address);
+                    setAddress(address);
+                    setCoordinates({ lat: latitude, lng: longitude });
                 },
-            });
-            console.log("API Response:", response); // Log the entire API response
-
-            const results = response.data.predictions.map(prediction => ({
-                description: prediction.description,
-            }));
-            setSuggestions(results);
-            console.log("Suggestions:", results); // Log the suggestions
-        } catch (error) {
-            console.error('Error fetching data:', error);
+                (error) => {
+                    console.error('Error fetching geolocation', error);
+                }
+            );
+        } else {
+            console.log('Geolocation is not supported by this browser.');
         }
-    };
-
-    const handleChange = (event) => {
-        const value = event.target.value;
-        console.log("Handle Change Value:", value); // Log the value from handleChange
-        setInput(value);
-        fetchData(value);
-    };
-
-    const handleFocus = () => {
-        console.log("Input Focused");
-        setInput('');
-    };
-
-    const handleBlur = () => {
-        console.log("Input Blurred");
-        if (input === '') {
-            setInput('Where do you want to find a barbershop?');
-        }
-        // Hide suggestions after a delay to allow onMouseDown event to trigger
-        setTimeout(() => setSuggestions([]), 100);
-    };
-
-    const handleSuggestionClick = (description) => {
-        console.log("Suggestion Clicked:", description);
-        setInput(description);
-        setSuggestions([]);
-        navigate(`/search-results?query=${description}`);
-    };
-
-    const handleKeyUp = () => {
-        console.log("Key Up Event");
-        clearTimeout(timeoutVar);
-        timeoutVar = setTimeout(() => {
-            fetchData(input);
-        }, 1800);
-    };
-
-    let timeoutVar;
-
-    const handleKeyDown = () => {
-        console.log("Key Down Event");
-        clearTimeout(timeoutVar);
-    };
-
-    const handleSearchButtonClick = () => {
-        console.log("Search Button Clicked");
-        navigate(`/search-results?query=${input}`);
     };
 
     return (
-        <div className="input-wrapper" id="input-wrapper">
-            <Input
-                type="text"
-                name="search"
-                value={input}
-                onChange={handleChange}
-                autoComplete="off"
-                onFocus={handleFocus}
-                onBlur={handleBlur}
-                onKeyUp={handleKeyUp}
-                onKeyDown={handleKeyDown}
-            />
-            <div className="input-wrapper__text">
-                <div className="input-wrapper__text__left">FIND A BARBERSHOP</div>
-                <div className="input-wrapper__text__right">
-                    <div className="input-wrapper__text__right__go-right" />
-                </div>
-            </div>
-            <button onClick={handleSearchButtonClick}>Search</button>
-            {suggestions.length > 0 && (
-                <div className="suggestions">
-                    {suggestions.map((suggestion, i) => (
-                        <div
-                            key={i}
-                            className="suggestions__item"
-                            onMouseDown={() => handleSuggestionClick(suggestion.description)}
-                        >
-                            {suggestion.description}
+        <div className="search-bar">
+            <button onClick={handleGeolocation}>Use Current Location</button>
+            <PlacesAutocomplete
+                value={address}
+                onChange={(val) => setAddressState(val)}
+                onSelect={handleSelect}
+            >
+                {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
+                    <div>
+                        <input
+                            {...getInputProps({
+                                placeholder: 'Search Places ...',
+                                className: 'location-search-input',
+                            })}
+                        />
+                        <div className="autocomplete-dropdown-container">
+                            {loading && <div>Loading...</div>}
+                            {suggestions.map((suggestion) => {
+                                const className = suggestion.active
+                                    ? 'suggestion-item suggestion-item--active'
+                                    : 'suggestion-item';
+                                return (
+                                    <div
+                                        {...getSuggestionItemProps(suggestion, {
+                                            className,
+                                        })}
+                                    >
+                                        <span>{suggestion.description}</span>
+                                    </div>
+                                );
+                            })}
                         </div>
-                    ))}
-                </div>
-            )}
+                    </div>
+                )}
+            </PlacesAutocomplete>
         </div>
     );
 };
 
 export default SearchBar;
+
